@@ -1,5 +1,6 @@
 
 bin/
 pkg/
+.DS_Store
 
 REMARK.md
