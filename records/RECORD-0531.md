@@ -31,3 +31,7 @@ Go 语言中不允许使用无用的局部变量 (local variables), 会导致编
 \t						制表符
 \n 						换行符
 ```
+
+## 语法
+import了一个包路径包含有多个单词的package时，比如 image/color（image和color两个单词）
+通常用后一个单词表示这个包,例如 color.White
