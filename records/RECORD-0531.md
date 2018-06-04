@@ -7,8 +7,11 @@ len(os.Args)
 
 range 产生一堆值；索引以及在该索引处的元素值。
 
-make 创建
+// 创建函数 make 和 new
+make(T, args) 返回一个复杂的结构
 counts := make(map[string]int)
+
+new(T) 返回一个 `*T` , 返回一个指向已清零内存的指针
 
 ```
 
