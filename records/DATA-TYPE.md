@@ -3,6 +3,27 @@
 ## 基本类型
 
 ```bash
+bool
+
+string
+
+int  int8  int16  int32  int64
+uint uint8 uint16 uint32 uint64 uintptr
+
+// alias for uint8
+byte 
+
+// alias for int32
+// represents a Unicode code point
+rune 
+     
+float32 float64
+
+complex64 complex128
+
+```
+
+```bash
 i := 1234    					int
 j := int32(1)     		int32
 f := float32(3.14)    float32
