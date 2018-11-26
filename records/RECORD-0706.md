@@ -13,17 +13,21 @@ source .bash_profile
 ```
 
 ## Mac 重置 mysql 密码
+
 1.关闭 mysql 服务器
+
 ```bash
 sudo /usr/local/mysql/support-files/mysql.server stop
 ```
 
 2.
+
 ```bash
 sudo /usr/local/mysql/bin/mysqld_safe --skip-grant-tables
 ```
 
 3.打开另外一个终端
+
 ```bash
 mysql -u root -p
 
@@ -35,6 +39,7 @@ FLUSH PRIVILEGES;
 ```
 
 4. 重置密码
+
 ```bash
 mysql -u root -p
 
