@@ -47,5 +47,3 @@ set password = password('YOUR NEW MYSQL PASSWORD');
 
 show databases;
 ```
-
-本地 mysql 密码：QQ
