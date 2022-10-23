@@ -10,6 +10,9 @@ go mod 项目管理工具
 
 ```bash
 go env -w GO111MODULE=on
+
+// 设置国内镜像
+go env -w GOPROXY=https://goproxy.cn
 ```
 
 ## go 项目初始化
