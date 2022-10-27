@@ -18,7 +18,7 @@ var (
 		Example: "maple server config/settings.yml",
 		PreRun: func(cmd *cobra.Command, args []string) {
 			usage()
-			// setup()
+			setup()
 		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			return run()
@@ -45,6 +45,6 @@ func setup() {
 }
 
 func run() error {
-	fmt.Printf("11111")
+	fmt.Printf("2222")
 	return nil
 }
