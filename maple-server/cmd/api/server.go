@@ -3,9 +3,14 @@ package api
 import (
 	"fmt"
 	"log"
+	"maple-server/pkg/logger"
+	"maple-server/router"
+	"maple-server/tools"
 	config2 "maple-server/tools/config"
+	"net/http"
 
 	"github.com/spf13/cobra"
+	"github.com/spf13/viper"
 )
 
 var (
@@ -41,10 +46,40 @@ func setup() {
 	fmt.Printf("config: %v\n", config)
 	// 1. 读取配置
 	config2.ConfigSetup(config)
-
+	aa := "1"
+	logger.Infof("%s\n", aa)
 }
 
 func run() error {
-	fmt.Printf("2222")
+	if mode != "" {
+		config2.SetConfig(config, "settings.appliation.mode", mode)
+	}
+
+	if viper.GetString("settings.applition.mode") == string(tools.ModeProd) {
+
+	}
+
+	r := router.InitRouter()
+
+	if port != "" {
+		config2.SetConfig(config, "settings.appliation.port", port)
+	}
+
+	srv := &http.Server{
+		Addr:    "",
+		Handler: r,
+	}
+
+	go func() {
+		if err := srv.ListenAndServe(); err != nil && err != http.ErrServerClosed {
+			logger.Fatalf("listen: %s\n", err)
+		}
+	}()
+
+	fmt.Printf("%s Server Run http://%s:%s/ \r\n",
+		tools.GetCurrntTimeStr(),
+		config2.ApplicationConfig.Host,
+		config2.ApplicationConfig.Port)
+
 	return nil
 }
