@@ -46,8 +46,6 @@ func setup() {
 	fmt.Printf("config: %v\n", config)
 	// 1. 读取配置
 	config2.ConfigSetup(config)
-	aa := "1"
-	logger.Infof("%s\n", aa)
 }
 
 func run() error {
@@ -66,7 +64,7 @@ func run() error {
 	}
 
 	srv := &http.Server{
-		Addr:    "",
+		Addr:    config2.ApplicationConfig.Host + ":" + config2.ApplicationConfig.Port,
 		Handler: r,
 	}
 

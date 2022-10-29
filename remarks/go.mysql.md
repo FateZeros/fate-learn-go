@@ -14,7 +14,7 @@ source .bash_profile
 
 ## Mac 重置 mysql 密码
 
-1.关闭 mysql 服务器
+- 1.关闭 mysql 服务器
 
 ```bash
 sudo /usr/local/mysql/support-files/mysql.server stop
