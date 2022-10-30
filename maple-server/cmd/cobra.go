@@ -4,7 +4,6 @@ import (
 	"errors"
 	"fmt"
 	"maple-server/cmd/api"
-	"maple-server/cmd/migrate"
 	"maple-server/pkg/logger"
 	"os"
 
@@ -34,7 +33,7 @@ var rootCmd = &cobra.Command{
 func init() {
 	fmt.Printf("cobra init \n")
 	rootCmd.AddCommand(api.StartCmd)
-	rootCmd.AddCommand(migrate.StartCmd)
+	// rootCmd.AddCommand(migrate.StartCmd)
 }
 
 func Execute() {

@@ -1,7 +1,6 @@
 package config
 
 import (
-	"fmt"
 	"io/ioutil"
 	"maple-server/pkg/logger"
 	"os"
@@ -14,18 +13,17 @@ var cfgApplication *viper.Viper
 
 // 载入配置文件
 func ConfigSetup(path string) {
-	fmt.Printf("path: %v\n", path)
 	viper.SetConfigFile(path)
 	content, err := ioutil.ReadFile(path)
 
 	if err != nil {
-		logger.Fatal(fmt.Sprintf("Read config file fail: %s", err.Error()))
+		// logger.Fatal(fmt.Sprintf("Read config file fail: %s", err.Error()))
 	}
 
 	// Replace environment variables
 	err = viper.ReadConfig(strings.NewReader(os.ExpandEnv(string(content))))
 	if err != nil {
-		logger.Fatal(fmt.Sprintf("Parse config file fail: %s", err.Error()))
+		// logger.Fatal(fmt.Sprintf("Parse config file fail: %s", err.Error()))
 	}
 
 	// 启动参数
@@ -37,6 +35,7 @@ func ConfigSetup(path string) {
 
 	// 日志配置
 	logger.Init()
+
 }
 
 func SetConfig(configPath string, key string, value interface{}) {

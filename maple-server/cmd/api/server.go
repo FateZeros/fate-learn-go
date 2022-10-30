@@ -78,6 +78,7 @@ func run() error {
 		tools.GetCurrntTimeStr(),
 		config2.ApplicationConfig.Host,
 		config2.ApplicationConfig.Port)
+	fmt.Printf("%s Enter Control + C Shutdown Server \r\n", tools.GetCurrntTimeStr())
 
 	return nil
 }

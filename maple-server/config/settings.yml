@@ -1,0 +1,23 @@
+settings:
+    appliation:
+        mode: dev
+        port: "8002"
+    application:
+        domian: localhost:8002
+        host: 0.0.0.0
+        ishttps: false
+        mode: dev
+        name: maple-test
+        port: "8002"
+        readtimeout: 1
+        writertimeout: 2
+    log:
+        compress: 1
+        consolestdout: 1
+        filestdout: 0
+        level: debug
+        localtime: 1
+        maxage: 30
+        maxbackups: 300
+        maxsize: 10240
+        path: ./logs/maple.log
