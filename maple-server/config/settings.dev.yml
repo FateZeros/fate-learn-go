@@ -18,3 +18,10 @@ settings:
     maxbackups: 300
     maxsize: 10240
     path: ./logs/maple.log
+  database:
+    dbtype: mysql
+    host: 127.0.0.1
+    name: fate-mysql
+    password: ""
+    port: 3306
+    username: root

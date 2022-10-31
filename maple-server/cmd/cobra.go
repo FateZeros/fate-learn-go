@@ -25,7 +25,6 @@ var rootCmd = &cobra.Command{
 	PersistentPreRunE: func(cmd *cobra.Command, args []string) error { return nil },
 	Run: func(cmd *cobra.Command, args []string) {
 		usageStr := `欢迎使用 maple，可以使用 -h 查看命令`
-		fmt.Printf("usageStr: %v\n", usageStr)
 		logger.Infof("%s\n", usageStr)
 	},
 }

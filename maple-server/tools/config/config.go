@@ -10,6 +10,7 @@ import (
 )
 
 var cfgApplication *viper.Viper
+var cfgDatabase *viper.Viper
 
 // 载入配置文件
 func ConfigSetup(path string) {
@@ -25,6 +26,13 @@ func ConfigSetup(path string) {
 	if err != nil {
 		// logger.Fatal(fmt.Sprintf("Parse config file fail: %s", err.Error()))
 	}
+
+	// 数据库初始化
+	cfgDatabase = viper.Sub("settings.database")
+	if cfgDatabase == nil {
+		panic("config not found settings.database")
+	}
+	DatabaseConfig = InitDatabase(cfgDatabase)
 
 	// 启动参数
 	cfgApplication = viper.Sub("settings.application")

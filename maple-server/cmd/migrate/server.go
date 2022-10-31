@@ -30,6 +30,9 @@ func run() {
 	//1. 读取配置
 	config2.ConfigSetup(config)
 
+	//2. 初始化数据库链接
+	// database.Setup()
+
 	usage = `数据库基础数据初始化成功`
 	fmt.Println(usage)
 }

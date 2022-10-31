@@ -11,6 +11,13 @@ settings:
         port: "8002"
         readtimeout: 1
         writertimeout: 2
+    database:
+        dbtype: mysql
+        host: 127.0.0.1
+        name: fate-mysql
+        password: ""
+        port: 3306
+        username: root
     log:
         compress: 1
         consolestdout: 1

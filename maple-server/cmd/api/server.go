@@ -1,13 +1,19 @@
 package api
 
 import (
+	"context"
 	"fmt"
 	"log"
+	"maple-server/database"
+	"maple-server/global/orm"
 	"maple-server/pkg/logger"
 	"maple-server/router"
 	"maple-server/tools"
 	config2 "maple-server/tools/config"
 	"net/http"
+	"os"
+	"os/signal"
+	"time"
 
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
@@ -46,6 +52,8 @@ func setup() {
 	fmt.Printf("config: %v\n", config)
 	// 1. 读取配置
 	config2.ConfigSetup(config)
+	// 2. 初始化数据库链接
+	database.Setup()
 }
 
 func run() error {
@@ -58,6 +66,13 @@ func run() error {
 	}
 
 	r := router.InitRouter()
+
+	defer func() {
+		err := orm.Eloquent.Close()
+		if err != nil {
+			logger.Error(err)
+		}
+	}()
 
 	if port != "" {
 		config2.SetConfig(config, "settings.appliation.port", port)
@@ -79,6 +94,19 @@ func run() error {
 		config2.ApplicationConfig.Host,
 		config2.ApplicationConfig.Port)
 	fmt.Printf("%s Enter Control + C Shutdown Server \r\n", tools.GetCurrntTimeStr())
+
+	// 等待中断信号以优雅地关闭服务器（设置 5 秒的超时时间）
+	quit := make(chan os.Signal)
+	signal.Notify(quit, os.Interrupt)
+	<-quit
+	fmt.Printf("%s Shutdown Server ... \r\n", tools.GetCurrntTimeStr())
+
+	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
+	defer cancel()
+	if err := srv.Shutdown(ctx); err != nil {
+		logger.Fatal("Server Shutdown:", err)
+	}
+	logger.Info("Server exiting")
 
 	return nil
 }

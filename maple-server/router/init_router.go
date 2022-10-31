@@ -16,5 +16,8 @@ func InitRouter() *gin.Engine {
 	}
 	middleware.InitMiddleware(r)
 
+	// 注册系统路由
+	InitSysRouter(r)
+
 	return r
 }
