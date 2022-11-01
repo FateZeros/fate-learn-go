@@ -11,5 +11,8 @@ func InitSysRouter(r *gin.Engine) *gin.RouterGroup {
 
 	systemRouter.SysBaseRouter(g)
 
+	// 无需认证
+	systemRouter.SysNoCheckRoleRouter(g)
+
 	return g
 }

@@ -58,10 +58,10 @@ func setup() {
 
 func run() error {
 	if mode != "" {
-		config2.SetConfig(config, "settings.appliation.mode", mode)
+		config2.SetConfig(config, "settings.application.mode", mode)
 	}
 
-	if viper.GetString("settings.applition.mode") == string(tools.ModeProd) {
+	if viper.GetString("settings.application.mode") == string(tools.ModeProd) {
 
 	}
 
@@ -75,7 +75,7 @@ func run() error {
 	}()
 
 	if port != "" {
-		config2.SetConfig(config, "settings.appliation.port", port)
+		config2.SetConfig(config, "settings.application.port", port)
 	}
 
 	srv := &http.Server{

@@ -68,6 +68,14 @@ show global variables like 'port';
 
 [mysql 端口为 0 解决方法](https://www.jianshu.com/p/a2b5a1d4a36a)
 
+### 修改数据库密码
+
+mysql 8.0 版本
+
+```bash
+ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY '123456'
+```
+
 ## 在 go 使用 mysql
 
 ```bash

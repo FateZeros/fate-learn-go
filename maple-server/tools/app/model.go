@@ -1,0 +1,15 @@
+package app
+
+type Response struct {
+	// 代码
+	Code int `json:"code" example:"200"`
+	// 数据集
+	Data interface{} `json:"data"`
+	// 消息
+	Msg string `json:"msg"`
+}
+
+func (res *Response) ReturnOK() *Response {
+	res.Code = 200
+	return res
+}
