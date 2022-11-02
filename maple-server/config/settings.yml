@@ -1,27 +1,30 @@
 settings:
-  application:
-    domian: localhost:8002
-    host: 0.0.0.0
-    ishttps: false
-    mode: dev
-    name: maple-test
-    port: "8002"
-    readtimeout: 1
-    writertimeout: 2
-  database:
-    dbtype: mysql
-    host: 127.0.0.1
-    name: maple
-    password: 123456
-    port: 3306
-    username: root
-  log:
-    compress: 1
-    consolestdout: 1
-    filestdout: 0
-    level: debug
-    localtime: 1
-    maxage: 30
-    maxbackups: 300
-    maxsize: 10240
-    path: ./logs/maple.log
+    application:
+        domian: localhost:8002
+        host: 0.0.0.0
+        ishttps: false
+        mode: dev
+        name: maple-test
+        port: "8002"
+        readtimeout: 1
+        writertimeout: 2
+    database:
+        dbtype: mysql
+        host: 127.0.0.1
+        name: maple
+        password: 123456
+        port: 3306
+        username: root
+    jwt:
+        secret: maple
+        timeout: 86400
+    log:
+        compress: 1
+        consolestdout: 1
+        filestdout: 0
+        level: debug
+        localtime: 1
+        maxage: 30
+        maxbackups: 300
+        maxsize: 10240
+        path: ./logs/maple.log

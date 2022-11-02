@@ -25,3 +25,6 @@ settings:
     password: ""
     port: 3306
     username: root
+  jwt:
+    secret: maple
+    timeout: 86400
