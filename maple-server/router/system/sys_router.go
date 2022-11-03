@@ -19,6 +19,6 @@ func SysNoCheckRoleRouter(r *gin.RouterGroup) {
 func RegisterBaseRouter(v1 *gin.RouterGroup, authMiddleware *jwt.GinJWTMiddleware) {
 	v1auth := v1.Group("").Use(authMiddleware.MiddlewareFunc())
 	{
-		v1auth.GET("/getinfo", system.GetUserInfo)
+		v1auth.GET("/getUserInfo", system.GetUserInfo)
 	}
 }

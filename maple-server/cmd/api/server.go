@@ -15,6 +15,7 @@ import (
 	"os/signal"
 	"time"
 
+	"github.com/gin-gonic/gin"
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
 )
@@ -62,7 +63,7 @@ func run() error {
 	}
 
 	if viper.GetString("settings.application.mode") == string(tools.ModeProd) {
-
+		gin.SetMode(gin.ReleaseMode)
 	}
 
 	r := router.InitRouter()

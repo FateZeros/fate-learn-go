@@ -8,6 +8,8 @@ import (
 )
 
 func sysCheckRoleRouterInit(r *gin.RouterGroup, authMiddleware *jwtauth.GinJWTMiddleware) {
+	r.POST("/login", authMiddleware.LoginHandler)
+
 	v1 := r.Group("/api/v1")
 
 	// 系统管理

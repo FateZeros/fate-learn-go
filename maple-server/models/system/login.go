@@ -1,0 +1,31 @@
+package system
+
+import (
+	"maple-server/global/orm"
+	"maple-server/tools"
+)
+
+type Login struct {
+	Username  string `form:"UserName" json:"username" binding:"required"`
+	Password  string `form:"Password" json:"password" binding:"required"`
+	Code      string `form:"Code" json:"code"`
+	UUID      string `form:"UUID" json:"uuid"`
+	LoginType int    `form:"LoginType" json:"loginType"`
+}
+
+func (u *Login) GetUser() (user SysUser, e error) {
+	e = orm.Eloquent.Table("sys_user").Where("username = ? ", u.Username).Find(&user).Error
+	if e != nil {
+		return
+	}
+
+	// 验证密码
+	if u.LoginType == 0 {
+		_, e = tools.CompareHashAndPassword(user.Password, u.Password)
+		if e != nil {
+			return
+		}
+	}
+
+	return
+}

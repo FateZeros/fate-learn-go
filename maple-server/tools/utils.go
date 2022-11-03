@@ -3,6 +3,8 @@ package tools
 import (
 	"maple-server/pkg/logger"
 	"strconv"
+
+	"golang.org/x/crypto/bcrypt"
 )
 
 // HasError 错误断言
@@ -21,4 +23,13 @@ func HasError(err error, msg string, code ...int) {
 		logger.Info(err)
 		panic("CustomError#" + strconv.Itoa(statusCode) + "#" + msg)
 	}
+}
+
+func CompareHashAndPassword(e string, p string) (bool, error) {
+	err := bcrypt.CompareHashAndPassword([]byte(e), []byte(p))
+	if err != nil {
+		logger.Info(err.Error())
+		return false, err
+	}
+	return true, nil
 }
