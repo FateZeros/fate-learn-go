@@ -54,7 +54,6 @@ func Authenticator(c *gin.Context) (interface{}, error) {
 		// authUserCount int
 		// addUserInfo   system.SysUser
 	)
-
 	user, e := loginVal.GetUser()
 	if e == nil {
 		if user.Status == "1" {

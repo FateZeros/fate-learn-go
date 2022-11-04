@@ -1,6 +1,9 @@
 package system
 
-import "maple-server/global/orm"
+import (
+	"fmt"
+	"maple-server/global/orm"
+)
 
 type SysUserId struct {
 	UserId int `gorm:"primary_key;AUTO_INCREMENT"  json:"userId"` // 编码
@@ -57,9 +60,10 @@ func (SysUser) TableName() string {
 
 // 获取用户数据
 func (e *SysUser) Get() (SysUserView SysUserView, err error) {
-
+	fmt.Printf("e.TableName(): %v\n", e.TableName())
 	table := orm.Eloquent.Table(e.TableName()).Select([]string{"sys_user.*", "sys_role.role_name"})
 	table = table.Joins("left join sys_role on sys_user.role_id=sys_role.role_id")
+	fmt.Printf("table: %v\n", table)
 	if e.UserId != 0 {
 		table = table.Where("user_id = ?", e.UserId)
 	}
