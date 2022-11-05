@@ -1,6 +1,7 @@
 package router
 
 import (
+	"maple-server/apis/tpl"
 	"maple-server/pkg/jwtauth"
 	systemRouter "maple-server/router/system"
 
@@ -24,6 +25,9 @@ func sysCheckRoleRouterInit(r *gin.RouterGroup, authMiddleware *jwtauth.GinJWTMi
 	r.POST("/login", authMiddleware.LoginHandler)
 
 	v1 := r.Group("/api/v1")
+
+	// 兼容前后端不分离的情
+	r.GET("/", tpl.Tpl)
 
 	// 系统管理
 	systemRouter.RegisterBaseRouter(v1, authMiddleware)

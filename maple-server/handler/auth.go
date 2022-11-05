@@ -2,6 +2,7 @@ package handler
 
 import (
 	"errors"
+	"fmt"
 	"maple-server/models/system"
 	jwt "maple-server/pkg/jwtauth"
 	"maple-server/pkg/logger"
@@ -18,7 +19,7 @@ func PayloadFunc(data interface{}) jwt.MapClaims {
 			jwt.IdentityKey: u.UserId,
 			// jwt.RoleIdKey:   r.RoleId,
 			// jwt.RoleKey:     r.RoleKey,
-			// jwt.NiceKey:     u.Username,
+			jwt.NiceKey: u.Username,
 			// jwt.RoleNameKey: r.RoleName,
 		}
 	}
@@ -54,15 +55,26 @@ func Authenticator(c *gin.Context) (interface{}, error) {
 		// authUserCount int
 		// addUserInfo   system.SysUser
 	)
+
+	// 获取前端过来的数据
+	if err := c.ShouldBind(&loginVal); err != nil {
+		// loginLog.Status = "1"
+		// loginLog.Msg = "数据解析失败"
+		// loginLog.Username = loginVal.Username
+		// _, _ = loginLog.Create()
+		return nil, jwt.ErrMissingLoginValues
+	}
+
 	user, e := loginVal.GetUser()
 	if e == nil {
 		if user.Status == "1" {
 			return nil, errors.New("用户已被禁用。")
 		}
+		return map[string]interface{}{"user": user}, nil
 	} else {
 		logger.Info(e.Error())
 	}
-
+	fmt.Printf("user: %v\n", user)
 	return nil, jwt.ErrFailedAuthentication
 }
 

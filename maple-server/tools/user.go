@@ -1,10 +1,10 @@
 package tools
 
 import (
+	jwt "maple-server/pkg/jwtauth"
 	"maple-server/pkg/logger"
 
 	"github.com/gin-gonic/gin"
-	"github.com/golang-jwt/jwt"
 )
 
 func ExtractClaims(c *gin.Context) jwt.MapClaims {
