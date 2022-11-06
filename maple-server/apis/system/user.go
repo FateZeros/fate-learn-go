@@ -8,6 +8,9 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
+// @Summary 摘要 比如获取用户列表
+// @Schemes
+// @Description 这里写描述 get users
 func GetUserInfo(c *gin.Context) {
 	var mp = make(map[string]interface{})
 

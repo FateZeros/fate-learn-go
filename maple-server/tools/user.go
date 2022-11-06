@@ -1,6 +1,7 @@
 package tools
 
 import (
+	"fmt"
 	jwt "maple-server/pkg/jwtauth"
 	"maple-server/pkg/logger"
 
@@ -23,4 +24,13 @@ func GetUserId(c *gin.Context) int {
 	}
 	logger.Info("********** 路径：" + c.Request.URL.Path + "  请求方法：" + c.Request.Method + "  说明：缺少identity")
 	return 0
+}
+
+func GetRoleName(c *gin.Context) string {
+	data := ExtractClaims(c)
+	if data["rolekey"] != nil {
+		return (data["rolekey"]).(string)
+	}
+	fmt.Println("********** 路径：" + c.Request.URL.Path + "  请求方法：" + c.Request.Method + "  缺少rolekey")
+	return ""
 }

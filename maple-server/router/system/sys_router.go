@@ -20,5 +20,6 @@ func RegisterBaseRouter(v1 *gin.RouterGroup, authMiddleware *jwt.GinJWTMiddlewar
 	v1auth := v1.Group("").Use(authMiddleware.MiddlewareFunc())
 	{
 		v1auth.GET("/getUserInfo", system.GetUserInfo)
+		v1auth.GET("/menurole", system.GetMenuRole)
 	}
 }
