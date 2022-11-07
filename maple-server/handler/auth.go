@@ -14,13 +14,13 @@ import (
 func PayloadFunc(data interface{}) jwt.MapClaims {
 	if v, ok := data.(map[string]interface{}); ok {
 		u, _ := v["user"].(system.SysUser)
-		// r, _ := v["role"].(system.SysRole)
+		r, _ := v["role"].(system.SysRole)
 		return jwt.MapClaims{
 			jwt.IdentityKey: u.UserId,
-			// jwt.RoleIdKey:   r.RoleId,
-			// jwt.RoleKey:     r.RoleKey,
-			jwt.NiceKey: u.Username,
-			// jwt.RoleNameKey: r.RoleName,
+			jwt.RoleIdKey:   r.RoleId,
+			jwt.RoleKey:     r.RoleKey,
+			jwt.NiceKey:     u.Username,
+			jwt.RoleNameKey: r.RoleName,
 		}
 	}
 	return jwt.MapClaims{}
@@ -50,7 +50,7 @@ func Authenticator(c *gin.Context) (interface{}, error) {
 	var (
 		loginVal system.Login
 		// loginLog      system.LoginLog
-		// roleValue     system.SysRole
+		// roleValue system.SysRole
 		// authUserCount int
 		// addUserInfo   system.SysUser
 	)
@@ -64,12 +64,12 @@ func Authenticator(c *gin.Context) (interface{}, error) {
 		return nil, jwt.ErrMissingLoginValues
 	}
 
-	user, e := loginVal.GetUser()
+	user, role, e := loginVal.GetUser()
 	if e == nil {
 		if user.Status == "1" {
 			return nil, errors.New("用户已被禁用。")
 		}
-		return map[string]interface{}{"user": user}, nil
+		return map[string]interface{}{"user": user, "role": role}, nil
 	} else {
 		logger.Info(e.Error())
 	}
@@ -81,9 +81,9 @@ func Authorizator(data interface{}, c *gin.Context) bool {
 
 	if v, ok := data.(map[string]interface{}); ok {
 		u, _ := v["user"].(system.SysUser)
-		// r, _ := v["role"].(system.SysRole)
-		// c.Set("role", r.RoleName)
-		// c.Set("roleIds", r.RoleId)
+		r, _ := v["role"].(system.SysRole)
+		c.Set("role", r.RoleName)
+		c.Set("roleIds", r.RoleId)
 		c.Set("userId", u.UserId)
 		c.Set("userName", u.UserName)
 
