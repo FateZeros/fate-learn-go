@@ -98,3 +98,10 @@ func Unauthorized(c *gin.Context, code int, message string) {
 		"msg":  message,
 	})
 }
+
+func LogOut(c *gin.Context) {
+	c.JSON(http.StatusOK, gin.H{
+		"code": 200,
+		"msg":  "退出成功",
+	})
+}

@@ -21,5 +21,6 @@ func RegisterBaseRouter(v1 *gin.RouterGroup, authMiddleware *jwt.GinJWTMiddlewar
 	{
 		v1auth.GET("/getUserInfo", system.GetUserInfo)
 		v1auth.GET("/menurole", system.GetMenuRole)
+		v1auth.POST("/logout", handler.LogOut)
 	}
 }
