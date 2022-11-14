@@ -1,6 +1,10 @@
 package system
 
-import "maple-server/global/orm"
+import (
+	"errors"
+	"maple-server/global/orm"
+	"maple-server/tools"
+)
 
 type Menu struct {
 	MenuId     int    `json:"menuId" gorm:"primary_key;AUTO_INCREMENT"`
@@ -152,5 +156,35 @@ func (e *Menu) GetByRoleName(rolename string) (Menus []Menu, err error) {
 	if err = table.Order("sort").Find(&Menus).Error; err != nil {
 		return
 	}
+	return
+}
+
+func (e *Menu) Create() (id int, err error) {
+	result := orm.Eloquent.Table(e.TableName()).Create(&e)
+	if result.Error != nil {
+		err = result.Error
+		return
+	}
+	err = InitPath(e)
+	if err != nil {
+		return
+	}
+	id = e.MenuId
+	return
+}
+
+func InitPath(menu *Menu) (err error) {
+	parentMenu := new(Menu)
+	if int(menu.ParentId) != 0 {
+		orm.Eloquent.Table("sys_menu").Where("menu_id = ?", menu.ParentId).First(parentMenu)
+		if parentMenu.Paths == "" {
+			err = errors.New("父级paths异常，请尝试对当前节点父级菜单进行更新操作！")
+			return
+		}
+		menu.Paths = parentMenu.Paths + "/" + tools.IntToString(menu.MenuId)
+	} else {
+		menu.Paths = "/0/" + tools.IntToString(menu.MenuId)
+	}
+	orm.Eloquent.Table("sys_menu").Where("menu_id = ?", menu.MenuId).Update("paths", menu.Paths)
 	return
 }

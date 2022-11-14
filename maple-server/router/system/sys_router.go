@@ -24,3 +24,13 @@ func RegisterBaseRouter(v1 *gin.RouterGroup, authMiddleware *jwt.GinJWTMiddlewar
 		v1auth.POST("/logout", handler.LogOut)
 	}
 }
+
+func RegisterMenuRouter(v1 *gin.RouterGroup, authMiddleware *jwt.GinJWTMiddleware) {
+	menu := v1.Group("/menu").Use(authMiddleware.MiddlewareFunc())
+	{
+		// menu.GET("/:id", system.GetMenu)
+		menu.POST("", system.InsertMenu)
+		// menu.PUT("", system.UpdateMenu)
+		// menu.DELETE("/:id", system.DeleteMenu)
+	}
+}
