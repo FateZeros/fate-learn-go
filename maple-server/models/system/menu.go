@@ -188,3 +188,27 @@ func InitPath(menu *Menu) (err error) {
 	orm.Eloquent.Table("sys_menu").Where("menu_id = ?", menu.MenuId).Update("paths", menu.Paths)
 	return
 }
+
+func (e *Menu) GetByMenuId() (Menu Menu, err error) {
+	table := orm.Eloquent.Table(e.TableName())
+	table = table.Where("menu_id = ?", e.MenuId)
+	if err = table.Find(&Menu).Error; err != nil {
+		return
+	}
+	return
+}
+
+func (e *Menu) Update(id int) (update Menu, err error) {
+	if err = orm.Eloquent.Table(e.TableName()).Model(&update).Update(&e).Error; err != nil {
+		return
+	}
+
+	if err = orm.Eloquent.Table(e.TableName()).Model(&update).Update(&e).Error; err != nil {
+		return
+	}
+	err = InitPath(e)
+	if err != nil {
+		return
+	}
+	return
+}
