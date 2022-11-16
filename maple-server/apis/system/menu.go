@@ -69,3 +69,18 @@ func UpdateMenu(c *gin.Context) {
 	}
 	app.OK(c, "", "修改成功")
 }
+
+// @Summary 删除菜单
+// @Description 获取JSON
+func DeleteMenu(c *gin.Context) {
+	var data system.Menu
+	id, _ := tools.StringToInt(c.Param("id"))
+
+	data.UpdateBy = tools.GetUserIdStr(c)
+	_, err := data.Delete(id)
+	if err != nil {
+		app.Error(c, -1, err, "")
+		return
+	}
+	app.OK(c, "", "删除成功")
+}

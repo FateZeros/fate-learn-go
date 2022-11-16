@@ -212,3 +212,12 @@ func (e *Menu) Update(id int) (update Menu, err error) {
 	}
 	return
 }
+
+func (e *Menu) Delete(id int) (success bool, err error) {
+	if err = orm.Eloquent.Table(e.TableName()).Where("menu_id = ?", id).Delete(&Menu{}).Error; err != nil {
+		success = false
+		return
+	}
+	success = true
+	return
+}
