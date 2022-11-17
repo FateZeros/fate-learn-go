@@ -34,3 +34,10 @@ func RegisterMenuRouter(v1 *gin.RouterGroup, authMiddleware *jwt.GinJWTMiddlewar
 		menu.DELETE("/:id", system.DeleteMenu)
 	}
 }
+
+func RegisterRoleRouter(v1 *gin.RouterGroup, authMiddleware *jwt.GinJWTMiddleware) {
+	role := v1.Group("/role").Use(authMiddleware.MiddlewareFunc())
+	{
+		role.POST("", system.InsertRole)
+	}
+}

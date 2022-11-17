@@ -1,5 +1,11 @@
 package system
 
+import (
+	"maple-server/global/orm"
+
+	"github.com/pkg/errors"
+)
+
 type SysRole struct {
 	RoleId   int    `json:"roleId" gorm:"primary_key;AUTO_INCREMENT"` // 角色编码
 	RoleName string `json:"roleName" gorm:"type:varchar(128);"`       // 角色名称
@@ -17,6 +23,26 @@ type SysRole struct {
 	BaseModel
 }
 
+type MenuIdList struct {
+	MenuId int `json:"menuId"`
+}
+
 func (SysRole) TableName() string {
 	return "sys_role"
+}
+
+func (role *SysRole) Insert() (id int, err error) {
+	i := 0
+	orm.Eloquent.Table(role.TableName()).Where("(role_name = ? or role_key = ?) and `delete_time` IS NULL", role.RoleName, role.RoleKey).Count(&i)
+	if i > 0 {
+		return 0, errors.New("角色名称或者角色标识已经存在")
+	}
+	role.UpdateBy = ""
+	result := orm.Eloquent.Table(role.TableName()).Create(&role)
+	if result.Error != nil {
+		err = result.Error
+		return
+	}
+	id = role.RoleId
+	return
 }
