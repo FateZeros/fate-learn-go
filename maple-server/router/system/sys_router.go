@@ -38,6 +38,7 @@ func RegisterMenuRouter(v1 *gin.RouterGroup, authMiddleware *jwt.GinJWTMiddlewar
 func RegisterRoleRouter(v1 *gin.RouterGroup, authMiddleware *jwt.GinJWTMiddleware) {
 	role := v1.Group("/role").Use(authMiddleware.MiddlewareFunc())
 	{
+		role.GET("/:roleId", system.GetRole)
 		role.POST("", system.InsertRole)
 	}
 }

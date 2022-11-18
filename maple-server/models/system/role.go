@@ -31,6 +31,33 @@ func (SysRole) TableName() string {
 	return "sys_role"
 }
 
+func (role *SysRole) Get() (SysRole SysRole, err error) {
+	table := orm.Eloquent.Table("sys_role")
+	if role.RoleId != 0 {
+		table = table.Where("role_id = ?", role.RoleId)
+	}
+	if role.RoleName != "" {
+		table = table.Where("role_name = ?", role.RoleName)
+	}
+	if err = table.First(&SysRole).Error; err != nil {
+		return
+	}
+	return
+}
+
+// 获取角色对应的菜单ids
+func (role *SysRole) GetRoleMenuId() ([]int, error) {
+	menuIds := make([]int, 0)
+	menuList := make([]MenuIdList, 0)
+	if err := orm.Eloquent.Table("sys_role_menu").Select("sys_role_menu.menu_id").Joins("LEFT JOIN sys_menu on sys_menu.menu_id=sys_role_menu.menu_id").Where("role_id = ? ", role.RoleId).Where(" sys_role_menu.menu_id not in(select sys_menu.parent_id from sys_role_menu LEFT JOIN sys_menu on sys_menu.menu_id=sys_role_menu.menu_id where role_id =? )", role.RoleId).Find(&menuList).Error; err != nil {
+		return nil, err
+	}
+	for i := 0; i < len(menuList); i++ {
+		menuIds = append(menuIds, menuList[i].MenuId)
+	}
+	return menuIds, nil
+}
+
 func (role *SysRole) Insert() (id int, err error) {
 	i := 0
 	orm.Eloquent.Table(role.TableName()).Where("(role_name = ? or role_key = ?) and `delete_time` IS NULL", role.RoleName, role.RoleKey).Count(&i)
