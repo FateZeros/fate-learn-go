@@ -40,5 +40,6 @@ func RegisterRoleRouter(v1 *gin.RouterGroup, authMiddleware *jwt.GinJWTMiddlewar
 	{
 		role.GET("/:roleId", system.GetRole)
 		role.POST("", system.InsertRole)
+		role.PUT("", system.UpdateRole)
 	}
 }

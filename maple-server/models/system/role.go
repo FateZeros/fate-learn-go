@@ -73,3 +73,21 @@ func (role *SysRole) Insert() (id int, err error) {
 	id = role.RoleId
 	return
 }
+
+func (role *SysRole) Update(id int) (update SysRole, err error) {
+	if err = orm.Eloquent.Table(role.TableName()).First(&update, id).Error; err != nil {
+		return
+	}
+	if role.RoleName != "" && role.RoleName != update.RoleName {
+		return update, errors.New(("角色名称不允许修改！"))
+	}
+
+	if role.RoleKey != "" && role.RoleKey != update.RoleKey {
+		return update, errors.New("角色标识不允许修改！")
+	}
+
+	if err = orm.Eloquent.Table(role.TableName()).Model(&update).Updates(&role).Error; err != nil {
+		return
+	}
+	return
+}

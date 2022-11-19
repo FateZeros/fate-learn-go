@@ -54,3 +54,25 @@ func InsertRole(c *gin.Context) {
 	}
 	app.OK(c, data, "添加角色成功")
 }
+
+// @Summary 修改用户角色
+func UpdateRole(c *gin.Context) {
+	var (
+		data system.SysRole
+		// roleMenu system.RoleMenu
+		err error
+	)
+	data.UpdateBy = tools.GetUserIdStr(c)
+	err = c.Bind(&data)
+	if err != nil {
+		app.Error(c, -1, err, "")
+		return
+	}
+	result, err := data.Update(data.RoleId)
+	if err != nil {
+		app.Error(c, -1, err, "")
+		return
+	}
+	// _, err = roleMenu
+	app.OK(c, result, "修改成功")
+}
