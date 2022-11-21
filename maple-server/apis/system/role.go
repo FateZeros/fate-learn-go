@@ -76,3 +76,17 @@ func UpdateRole(c *gin.Context) {
 	// _, err = roleMenu
 	app.OK(c, result, "修改成功")
 }
+
+// @Summary 删除用户角色
+func DeeleteRole(c *gin.Context) {
+	var Role system.SysRole
+	Role.UpdateBy = tools.GetUserIdStr(c)
+
+	IDS := tools.IdsStrToIdsIntGroup("roleId", c)
+	_, err := Role.BatchDelete(IDS)
+	if err != nil {
+		app.Error(c, -1, err, "")
+		return
+	}
+	app.OK(c, "", "删除成功")
+}

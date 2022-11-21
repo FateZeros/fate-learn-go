@@ -91,3 +91,11 @@ func (role *SysRole) Update(id int) (update SysRole, err error) {
 	}
 	return
 }
+
+func (role *SysRole) BatchDelete(id []int) (Result bool, err error) {
+	if err = orm.Eloquent.Table(role.TableName()).Where("role_id in (?)", id).Delete(&SysRole{}).Error; err != nil {
+		return
+	}
+	Result = true
+	return
+}
