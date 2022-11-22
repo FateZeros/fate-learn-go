@@ -46,8 +46,8 @@ func InsertRole(c *gin.Context) {
 		return
 	}
 	data.RoleId = id
-	var menu system.RoleMenu
-	_, err = menu.Insert(id, data.MenuIds)
+	var roleMenu system.RoleMenu
+	_, err = roleMenu.Insert(id, data.MenuIds)
 	if err != nil {
 		app.Error(c, -1, err, "")
 		return
