@@ -49,4 +49,8 @@ func sysCheckRoleRouterInit(r *gin.RouterGroup, authMiddleware *jwtauth.GinJWTMi
 	systemRouter.RegisterBaseRouter(v1, authMiddleware)
 	// 菜单
 	systemRouter.RegisterMenuRouter(v1, authMiddleware)
+	// 角色
+	systemRouter.RegisterRoleRouter(v1, authMiddleware)
+	// 部门
+	systemRouter.RegisterDeptRouter(v1, authMiddleware)
 }

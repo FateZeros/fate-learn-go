@@ -1,6 +1,7 @@
 package system
 
 import (
+	"fmt"
 	"maple-server/global/orm"
 	"maple-server/tools"
 )
@@ -61,6 +62,7 @@ func (dept *Dept) Create() (Dept, error) {
 func (dept *Dept) Get() (Dept, error) {
 	var doc Dept
 	table := orm.Eloquent.Table(dept.TableName())
+	fmt.Printf("doc.DeptId: %v\n", doc.DeptId)
 	if dept.DeptId != 0 {
 		table = table.Where("dept_id = ?", dept.DeptId)
 	}

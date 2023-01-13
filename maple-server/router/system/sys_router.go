@@ -41,5 +41,14 @@ func RegisterRoleRouter(v1 *gin.RouterGroup, authMiddleware *jwt.GinJWTMiddlewar
 		role.GET("/:roleId", system.GetRole)
 		role.POST("", system.InsertRole)
 		role.PUT("", system.UpdateRole)
+		role.DELETE("/:roleId", system.DeleteRole)
+	}
+}
+
+func RegisterDeptRouter(v1 *gin.RouterGroup, authMiddleware *jwt.GinJWTMiddleware) {
+	dept := v1.Group("/dept").Use(authMiddleware.MiddlewareFunc())
+	{
+		dept.GET("/:deptId", system.GetDept)
+		dept.POST("", system.InsertDept)
 	}
 }

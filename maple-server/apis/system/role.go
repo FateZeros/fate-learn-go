@@ -78,7 +78,7 @@ func UpdateRole(c *gin.Context) {
 }
 
 // @Summary 删除用户角色
-func DeeleteRole(c *gin.Context) {
+func DeleteRole(c *gin.Context) {
 	var Role system.SysRole
 	Role.UpdateBy = tools.GetUserIdStr(c)
 
